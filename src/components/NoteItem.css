@@ -1,0 +1,39 @@
+.lists {
+  width: 100%;
+  box-shadow: 0px 2px 2px #898989;
+  margin-top: 12px;
+  display: flex;
+  padding: 12px;
+  justify-content: space-between;
+}
+.nums {
+  margin-right: 8px;
+}
+
+.note {
+  width: 50vw;
+}
+
+.author {
+  width: 20vw;
+}
+
+.actions {
+  width: 20vw;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actions i {
+  margin: 0 8px;
+}
+
+i.myedit:hover {
+  color: #4e75e9;
+  cursor: pointer;
+}
+
+i.myremove:hover {
+  color: #e95b4e;
+  cursor: pointer;
+}
