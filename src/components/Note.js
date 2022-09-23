@@ -15,6 +15,7 @@ const getLocalItems = () => {
 const Note = ({ onAdd }) => {
   const [note, setNote] = useState("");
   const [auth, setAuth] = useState("");
+  const [search, setSearch] = useState("");
   const [edit, setEdit] = useState(null);
   const [notes, setNotes] = useState(getLocalItems());
 
@@ -74,24 +75,35 @@ const Note = ({ onAdd }) => {
     localStorage.setItem("items", JSON.stringify(notes));
   }, [notes]);
 
+  const searchHandler = (event) => {
+    setSearch(event.target.value);
+  };
+
   let content = (
     <h2 style={{ margin: "0 auto" }}>No notes found add some notes!</h2>
   );
 
   if (notes.length > 0) {
-    content = notes.map((item, index) => {
-      return (
-        <NoteItem
-          num={index + 1}
-          myNote={item.note}
-          myAuthor={item.author}
-          key={item.id}
-          id={item.id}
-          deleteHandler={deleteHandler}
-          editHandler={editHandler}
-        />
-      );
-    });
+    content = notes
+      .filter((item) => {
+        return (
+          item.note.toLowerCase().includes(search.toLowerCase()) ||
+          item.author.toLowerCase().includes(search.toLowerCase())
+        );
+      })
+      .map((item, index) => {
+        return (
+          <NoteItem
+            num={index + 1}
+            myNote={item.note}
+            myAuthor={item.author}
+            key={item.id}
+            id={item.id}
+            deleteHandler={deleteHandler}
+            editHandler={editHandler}
+          />
+        );
+      });
   }
 
   return (
@@ -121,6 +133,10 @@ const Note = ({ onAdd }) => {
         </div>
       </form>
       <h1 style={{ textAlign: "center", marginTop: "1rem" }}>Notes</h1>
+      <div className="find">
+        <label>Search notes: </label>
+        <input style={{ margin: "0 auto" }} onChange={searchHandler} />
+      </div>
       <div className="note-container">{content}</div>
     </>
   );
